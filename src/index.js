@@ -4,13 +4,6 @@ import './index.css';
 
 const flushSync = ReactDOM.flushSync
 
-// // debugger
-// const HelloWorld = () => {
-//   return (
-//     <div>Hello world</div>
-//   )
-// }
-
 class HelloWorld extends React.Component {
   constructor (props) {
     super(props)
