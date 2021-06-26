@@ -187,7 +187,7 @@ if (__DEV__) {
 
       // Attach our event handlers
       window.addEventListener('error', handleWindowError);
-      fakeNode.addEventListener(evtType, callCallback, false);
+      fakeNode.addEventListener(evtType, callCallback, false);  //这里调用了callBack,把它当做一个假的事件的回调函数
 
       // Synchronously dispatch our fake event. If the user-provided function
       // errors, it will trigger our global error handler.

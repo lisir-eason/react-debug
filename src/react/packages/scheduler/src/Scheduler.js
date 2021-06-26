@@ -345,7 +345,7 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
     }
   } else {
     newTask.sortIndex = expirationTime;
-    push(taskQueue, newTask);
+    push(taskQueue, newTask);  //将任务加到队列中
     if (enableProfiling) {
       markTaskStart(newTask, currentTime);
       newTask.isQueued = true;

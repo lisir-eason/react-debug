@@ -1656,7 +1656,7 @@ function performUnitOfWork(unitOfWork: Fiber): void {
   if (enableProfilerTimer && (unitOfWork.mode & ProfileMode) !== NoMode) {
     // now() 记录开始时间
     startProfilerTimer(unitOfWork); 
-    //给unitOfWork的子树挂载（生成Fiber对象）并返回
+    //给unitOfWork的子树挂载（生成Fiber对象）并返回，如果有就对比
     next = beginWork(current, unitOfWork, subtreeRenderLanes);
     // now() - 上面的开始时间 = 渲染这个子树的耗时
     stopProfilerTimerIfRunningAndRecordDelta(unitOfWork, true);

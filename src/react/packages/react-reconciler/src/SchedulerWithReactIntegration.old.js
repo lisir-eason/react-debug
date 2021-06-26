@@ -146,7 +146,7 @@ export function scheduleSyncCallback(callback: SchedulerCallback) {
   // the next tick, or earlier if something calls `flushSyncCallbackQueue`.
   if (syncQueue === null) {
     syncQueue = [callback];
-    // Flush the queue in the next tick, at the earliest.
+    // Flush the queue in the next tick, at the earliest. 生成一个task并加入到timerQueue中，同时在host挂载flushWork
     immediateQueueCallbackNode = Scheduler_scheduleCallback(
       Scheduler_ImmediatePriority,
       flushSyncCallbackQueueImpl,

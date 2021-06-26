@@ -885,7 +885,7 @@ export function updateProperties(
 
   const wasCustomComponentTag = isCustomComponent(tag, lastRawProps);
   const isCustomComponentTag = isCustomComponent(tag, nextRawProps);
-  // Apply the diff.
+  // Apply the diff.   真正的更新dom元素
   updateDOMProperties(
     domElement,
     updatePayload,
