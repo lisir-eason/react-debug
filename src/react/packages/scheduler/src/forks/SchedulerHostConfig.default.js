@@ -195,6 +195,7 @@ if (
           hasTimeRemaining,
           currentTime,
         );
+        console.log(hasMoreWork);
         if (!hasMoreWork) {
           isMessageLoopRunning = false;
           scheduledHostCallback = null;

@@ -328,6 +328,8 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
     newTask.isQueued = false;
   }
 
+  console.log(taskQueue.length);
+
   if (startTime > currentTime) {
     // This is a delayed task.
     newTask.sortIndex = startTime;
@@ -346,6 +348,7 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
   } else {
     newTask.sortIndex = expirationTime;
     push(taskQueue, newTask);  //将任务加到队列中
+   
     if (enableProfiling) {
       markTaskStart(newTask, currentTime);
       newTask.isQueued = true;

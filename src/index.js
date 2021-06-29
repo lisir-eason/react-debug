@@ -4,6 +4,32 @@ import './index.css';
 
 const flushSync = ReactDOM.flushSync
 
+import SchedulerTask from './component/SchedulerTask'
+import Parent from './component/Parent'
+
+import Scheduler from 'scheduler'
+let NormalPriority = Scheduler.unstable_NormalPriority;
+let ImmediatePriority = Scheduler.unstable_ImmediatePriority;
+let LowPriority = Scheduler.unstable_LowPriority;
+let scheduleCallback = Scheduler.unstable_scheduleCallback;
+
+// function test1() {
+//     scheduleCallback(NormalPriority, () => {
+//         console.log('A')
+//     })
+//     scheduleCallback(ImmediatePriority, () => {
+//         console.log('B')
+//     })
+//     scheduleCallback(LowPriority, () => {
+//         console.log('C')
+//     })
+//     scheduleCallback(NormalPriority, () => {
+//         console.log('D')
+//     })
+//     // console.log('out log tag')
+// }
+// test1();
+
 class HelloWorld extends React.Component {
   constructor (props) {
     super(props)
@@ -19,19 +45,19 @@ class HelloWorld extends React.Component {
   //   console.log('componentWillMount');
   // }
 
-  // componentDidMount(){
-  //   console.log('componentDidMount');
-  //   const {count1, count2, count3} = this.state
-  //   this.setState({
-  //     count1: count1 * count1,
-  //   })
-  //   this.setState({
-  //     count2: count2 * count2,
-  //   })
-  //   this.setState({
-  //     count3: count3 * count3,
-  //   })
-  // }
+  componentDidMount(){
+    console.log('componentDidMount');
+    const {count1, count2, count3} = this.state
+    this.setState({
+      count1: count1 * count1,
+    })
+    this.setState({
+      count2: count2 * count2,
+    })
+    this.setState({
+      count3: count3 * count3,
+    })
+  }
 
   handleClick() {
     
@@ -50,73 +76,15 @@ class HelloWorld extends React.Component {
   }
 }
 
-class Parent extends React.Component {
-  state = {
-    async: true,
-    num: 1,
-    length: 4000,
-  }
 
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      this.updateNum()
-    }, 100)
-  }
+// ReactDOM.render(
+//   <Parent/>,
+//   document.getElementById('root')
+// );
 
-  componentWillUnmount() {
-    // 别忘了清除interval
-    if (this.interval) {
-      clearInterval(this.interval)
-    }
-  }
-
-  updateNum() {
-    const newNum = this.state.num === 3 ? 0 : this.state.num + 1
-    if (this.state.async) {
-      this.setState({
-        num: newNum,
-      })
-    } else {
-      flushSync(() => {
-        this.setState({
-          num: newNum,
-        })
-      })
-    }
-  }
-
-  render() {
-    const children = []
-
-    const { length, num, async } = this.state
-
-    for (let i = 0; i < length; i++) {
-      children.push(
-        <div className="item" key={i}>
-          {num}
-        </div>,
-      )
-    }
-
-    return (
-      <div className="main">
-        async:{' '}
-        <input
-          type="checkbox"
-          checked={async}
-          onChange={() => flushSync(() => this.setState({ async: !async }))}
-        />
-        <div className="wrapper">{children}</div>
-      </div>
-    )
-  }
-}
-
-
-ReactDOM.render(
-    <Parent/>,
+ReactDOM.unstable_createRoot(
   document.getElementById('root')
-);
+).render(<Parent />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -836,6 +836,7 @@ function performConcurrentWorkOnRoot(root) {
   }
 
   ensureRootIsScheduled(root, now());
+  //这里是中断当前任务
   if (root.callbackNode === originalCallbackNode) {
     // The task node scheduled for this root is the same one that's
     // currently executed. Need to return a continuation.
