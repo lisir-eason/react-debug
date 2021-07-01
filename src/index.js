@@ -6,6 +6,7 @@ const flushSync = ReactDOM.flushSync
 
 import SchedulerTask from './component/SchedulerTask'
 import Parent from './component/Parent'
+import HookDemo from './component/Hook';
 
 import Scheduler from 'scheduler'
 let NormalPriority = Scheduler.unstable_NormalPriority;
@@ -77,14 +78,14 @@ class HelloWorld extends React.Component {
 }
 
 
-// ReactDOM.render(
-//   <Parent/>,
-//   document.getElementById('root')
-// );
-
-ReactDOM.unstable_createRoot(
+ReactDOM.render(
+  <HookDemo/>,
   document.getElementById('root')
-).render(<Parent />);
+);
+
+// ReactDOM.unstable_createRoot(
+//   document.getElementById('root')
+// ).render(<Hook />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

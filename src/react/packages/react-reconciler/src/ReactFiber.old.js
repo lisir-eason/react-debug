@@ -119,40 +119,44 @@ function FiberNode(
   key: null | string,
   mode: TypeOfMode,
 ) {
-  // Instance
-  this.tag = tag;
-  this.key = key;
-  this.elementType = null;
-  this.type = null;
-  this.stateNode = null;
+  // 实例
+  this.tag = tag; //节点的类型，比如ClassComponent = 1，Fragment = 7
+  this.key = key;  //节点的key
+  this.elementType = null; //元素类型，这些类型可用于在视觉上区分类型，或启用/禁用某些功能。
+  this.type = null; //类型，普通的div就为字符串'div'
+  this.stateNode = null; //真实的dom节点
 
   // Fiber
-  this.return = null;
-  this.child = null;
-  this.sibling = null;
+  this.return = null; //父节点
+  this.child = null; //子节点
+  this.sibling = null; //兄弟节点
   this.index = 0;
 
-  this.ref = null;
+  this.ref = null; //ref
 
-  this.pendingProps = pendingProps;
-  this.memoizedProps = null;
-  this.updateQueue = null;
-  this.memoizedState = null;
+  this.pendingProps = pendingProps;  //挂起的props
+  this.memoizedProps = null; //上一次完成渲染后的props
+  this.updateQueue = null; //更新的队列，链表
+  this.memoizedState = null; //上一次渲染后的state,存放hook的
   this.dependencies = null;
 
-  this.mode = mode;
+  //当前组件使用的模式：StrictMode = 0b00001; BlockingMode = 0b00010;ConcurrentMode = 0b00100;
+  //Fiber被创建的时候他会继承父Fiber其他的标识也可以在创建的时候被设置
+  //但是在创建之后不应该再被修改，特别是他的子Fiber创建之前
+  //export const NoMode = 0b00000;
+  this.mode = mode; 
 
   // Effects
-  this.flags = NoFlags;
-  this.nextEffect = null;
+  this.flags = NoFlags;  //标记当前节点的更新状态:Update = 0b000000000000000100;Deletion = 0b000000000000001000;
+  this.nextEffect = null;  //节点的下个Effect
 
-  this.firstEffect = null;
-  this.lastEffect = null;
+  this.firstEffect = null;  //节点的第一个Effect
+  this.lastEffect = null;  //节点的最后一个Effect
 
-  this.lanes = NoLanes;
-  this.childLanes = NoLanes;
+  this.lanes = NoLanes;  //节点的优先级，SyncLane = 0b0000000000000000000000000000001
+  this.childLanes = NoLanes; //节点的子节点优先级
 
-  this.alternate = null;
+  this.alternate = null;  //替身，对应的树 workInProgress <==> current
 
   if (enableProfilerTimer) {
     // Note: The following is done to avoid a v8 performance cliff.

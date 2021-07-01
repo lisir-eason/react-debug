@@ -186,6 +186,7 @@ function workLoop(hasTimeRemaining, initialTime) {
       const continuationCallback = callback(didUserCallbackTimeout);
       currentTime = getCurrentTime();
       if (typeof continuationCallback === 'function') {
+        //如果callback执行完返回的continuationCallback，说明任务被暂停了，没有执行完
         currentTask.callback = continuationCallback;
         if (enableProfiling) {
           markTaskYield(currentTask, currentTime);
@@ -203,6 +204,7 @@ function workLoop(hasTimeRemaining, initialTime) {
     } else {
       pop(taskQueue);
     }
+    //继续选择优先级最高的任务，直至为null
     currentTask = peek(taskQueue);
   }
   // Return whether there's additional work
@@ -327,8 +329,6 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
   if (enableProfiling) {
     newTask.isQueued = false;
   }
-
-  console.log(taskQueue.length);
 
   if (startTime > currentTime) {
     // This is a delayed task.

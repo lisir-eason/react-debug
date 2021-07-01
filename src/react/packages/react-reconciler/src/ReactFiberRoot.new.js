@@ -27,29 +27,29 @@ import {initializeUpdateQueue} from './ReactUpdateQueue.new';
 import {LegacyRoot, BlockingRoot, ConcurrentRoot} from './ReactRootTags';
 
 function FiberRootNode(containerInfo, tag, hydrate) {
-  this.tag = tag;
-  this.containerInfo = containerInfo;
+  this.tag = tag;  //root的类型 LegacyRoot = 0; BlockingRoot = 1; ConcurrentRoot = 2;
+  this.containerInfo = containerInfo; //就是传入的根div,id为root的div
   this.pendingChildren = null;
-  this.current = null;
+  this.current = null;  //当前的fiber树，指向rootFiber
   this.pingCache = null;
-  this.finishedWork = null;
+  this.finishedWork = null;  //completeWork最后返回的树，也就是workInProgress，指向rootFiber
   this.timeoutHandle = noTimeout;
   this.context = null;
   this.pendingContext = null;
-  this.hydrate = hydrate;
-  this.callbackNode = null;
-  this.callbackPriority = NoLanePriority;
-  this.eventTimes = createLaneMap(NoLanes);
-  this.expirationTimes = createLaneMap(NoTimestamp);
+  this.hydrate = hydrate;  //是否混合模式
+  this.callbackNode = null;  //由schedule创建的callback，也就是宏观任务
+  this.callbackPriority = NoLanePriority; //由schedule创建的callback的优先级
+  this.eventTimes = createLaneMap(NoLanes);  //记录每个优先级任务的开始时间
+  this.expirationTimes = createLaneMap(NoTimestamp); //记录每个优先级任务的过期时间时间
 
-  this.pendingLanes = NoLanes;
-  this.suspendedLanes = NoLanes;
+  this.pendingLanes = NoLanes;  //挂起的车道
+  this.suspendedLanes = NoLanes;  //暂停的车道
   this.pingedLanes = NoLanes;
-  this.expiredLanes = NoLanes;
+  this.expiredLanes = NoLanes;  //过期的车道
   this.mutableReadLanes = NoLanes;
-  this.finishedLanes = NoLanes;
+  this.finishedLanes = NoLanes;  //完成的车道
 
-  this.entangledLanes = NoLanes;
+  this.entangledLanes = NoLanes;  //纠缠的车道
   this.entanglements = createLaneMap(NoLanes);
 
   if (supportsHydration) {

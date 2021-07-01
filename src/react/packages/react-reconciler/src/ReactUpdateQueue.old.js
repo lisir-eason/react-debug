@@ -109,6 +109,8 @@ export type Update<State> = {|
   eventTime: number,
   lane: Lane,
 
+  
+  // UpdateState = 0; ReplaceState = 1; ForceUpdate = 2; CaptureUpdate = 3;
   tag: 0 | 1 | 2 | 3,
   payload: any,
   callback: (() => mixed) | null,
@@ -121,11 +123,11 @@ type SharedQueue<State> = {|
 |};
 
 export type UpdateQueue<State> = {|
-  baseState: State,
-  firstBaseUpdate: Update<State> | null,
-  lastBaseUpdate: Update<State> | null,
-  shared: SharedQueue<State>,
-  effects: Array<Update<State>> | null,
+  baseState: State,  //每次操作完更新之后的state
+  firstBaseUpdate: Update<State> | null,  //队列中的第一个Update
+  lastBaseUpdate: Update<State> | null,  //队列中的最后一个Update
+  shared: SharedQueue<State>,  //shared.pending 共享的未处理的update
+  effects: Array<Update<State>> | null,  //effects
 |};
 
 export const UpdateState = 0;
